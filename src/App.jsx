@@ -12,6 +12,9 @@ import {
   Settings,
   Link,
   Check,
+  Maximize,
+  Minimize,
+  Share,
 } from "lucide-react";
 import JSZip from "jszip";
 
@@ -32,6 +35,21 @@ const PauseSolid = ({ size = 24 }) => (
 const DEFAULT_TEXT = `Welcome to the RSVP Speed Reader! This tool uses Rapid Serial Visual Presentation to help you read faster. Click the text icon in the top left to paste text or load an EPUB file. The reader displays one word at a time at a fixed focal point, reducing eye movement and allowing for faster reading speeds. Research suggests that RSVP can help readers achieve speeds of 500 words per minute or more with practice. Try starting at a comfortable pace and gradually increase the speed as you become more accustomed to the technique. Happy reading!`;
 
 const STORAGE_KEY = "rsvp-reader-settings";
+const IOS_BANNER_DISMISSED_KEY = "rsvp-ios-banner-dismissed";
+
+// Detect iOS Safari (not in standalone mode)
+function isIOSSafari() {
+  const ua = navigator.userAgent;
+  const isIOS = /iPad|iPhone|iPod/.test(ua) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+  const isSafari = /Safari/.test(ua) && !/CriOS|FxiOS|OPiOS|mercury/.test(ua);
+  const isStandalone = window.navigator.standalone === true;
+  return isIOS && isSafari && !isStandalone;
+}
+
+// Check if fullscreen API is supported
+function isFullscreenSupported() {
+  return document.documentElement.requestFullscreen !== undefined;
+}
 
 // Simple hash for text to use as key for positions
 function hashText(text) {
@@ -320,6 +338,15 @@ function App() {
     () => savedSettings?.fetchMetadataOnline ?? false,
   );
   const [linkCopied, setLinkCopied] = useState(false);
+  const [isFullscreen, setIsFullscreen] = useState(false);
+  const [showIOSBanner, setShowIOSBanner] = useState(() => {
+    if (!isIOSSafari()) return false;
+    try {
+      return localStorage.getItem(IOS_BANNER_DISMISSED_KEY) !== "true";
+    } catch {
+      return true;
+    }
+  });
   const timeoutRef = useRef(null);
   const prevTextRef = useRef(text);
   const fileInputRef = useRef(null);
@@ -517,6 +544,36 @@ function App() {
     }
   };
 
+  const toggleFullscreen = async () => {
+    try {
+      if (!document.fullscreenElement) {
+        await document.documentElement.requestFullscreen();
+      } else {
+        await document.exitFullscreen();
+      }
+    } catch (e) {
+      console.error("Fullscreen error:", e);
+    }
+  };
+
+  const dismissIOSBanner = () => {
+    setShowIOSBanner(false);
+    try {
+      localStorage.setItem(IOS_BANNER_DISMISSED_KEY, "true");
+    } catch {
+      // Ignore storage errors
+    }
+  };
+
+  // Listen for fullscreen changes
+  useEffect(() => {
+    const handleFullscreenChange = () => {
+      setIsFullscreen(!!document.fullscreenElement);
+    };
+    document.addEventListener("fullscreenchange", handleFullscreenChange);
+    return () => document.removeEventListener("fullscreenchange", handleFullscreenChange);
+  }, []);
+
   const handleProgressClick = (e) => {
     const rect = e.currentTarget.getBoundingClientRect();
     const x = e.clientX - rect.left;
@@ -576,6 +633,16 @@ function App() {
             onChange={handleFileUpload}
             style={{ display: "none" }}
           />
+          {isFullscreenSupported() && (
+            <button
+              onClick={toggleFullscreen}
+              style={styles.textBtn}
+              className="icon-btn"
+              title={isFullscreen ? "Exit fullscreen" : "Fullscreen"}
+            >
+              {isFullscreen ? <Minimize size={16} /> : <Maximize size={16} />}
+            </button>
+          )}
         </div>
         <div style={styles.topCenter}>
           <div style={styles.wpmControl} className="wpm-control">
@@ -961,6 +1028,23 @@ function App() {
               </p>
             </div>
           </div>
+        </div>
+      )}
+
+      {/* iOS install banner */}
+      {showIOSBanner && (
+        <div style={styles.iosBanner}>
+          <div style={styles.iosBannerContent}>
+            <Share size={16} style={{ flexShrink: 0 }} />
+            <span>For fullscreen, tap Share then "Add to Home Screen"</span>
+          </div>
+          <button
+            onClick={dismissIOSBanner}
+            style={styles.iosBannerClose}
+            aria-label="Dismiss"
+          >
+            <X size={16} />
+          </button>
         </div>
       )}
 
@@ -1537,6 +1621,39 @@ const styles = {
     color: "#555",
     margin: 0,
     marginTop: "2px",
+  },
+
+  // iOS install banner
+  iosBanner: {
+    position: "fixed",
+    bottom: 0,
+    left: 0,
+    right: 0,
+    backgroundColor: "#1a1a1a",
+    borderTop: "1px solid #333",
+    padding: "12px 16px",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "space-between",
+    gap: "12px",
+    zIndex: 1000,
+  },
+  iosBannerContent: {
+    display: "flex",
+    alignItems: "center",
+    gap: "10px",
+    color: "#999",
+    fontSize: "0.8rem",
+  },
+  iosBannerClose: {
+    background: "transparent",
+    border: "none",
+    color: "#666",
+    cursor: "pointer",
+    padding: "4px",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
   },
 };
 

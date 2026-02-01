@@ -1,3 +1,9 @@
+### 2026-02-02: 1.0.5
+
+* Add fullscreen button for desktop browsers
+* Add PWA support with manifest for standalone mode
+* Add iOS install banner prompting Add to Home Screen for fullscreen experience
+
 ### 2026-02-01: 1.0.4
 
 * Improve mobile responsiveness and book metadata layout
