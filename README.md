@@ -58,7 +58,7 @@ Studies have shown that RSVP reading can achieve speeds of 500+ words per minute
 - Skimming and preview reading
 - Building reading speed gradually
 
-Note: Extended RSVP reading can cause visual fatigue. Take breaks.
+Note: Extended RSVP reading can cause visual fatigue ([Benedetto et al., 2015](https://doi.org/10.1016/j.chb.2014.12.043)). Take breaks.
 
 ## Running locally
 
@@ -79,7 +79,7 @@ Output will be in the `dist` folder.
 
 ## Inspiration and similar projects
 
-- [RSVP Speed Reader](https://snowfluke.github.io/rsvp-speed-reader/) - Inspiration to theme
+- [RSVP Speed Reader](https://snowfluke.github.io/rsvp-speed-reader/) - Theme inspiration
 - [Spritz](https://spritz.com/) - The commercial product that popularized ORP-based RSVP
 - [OpenSpritz](https://github.com/Miserlou/OpenSpritz) - Open source Spritz implementation
 - [speedread](https://github.com/pasky/speedread) - Terminal-based Spritz-alike in Perl
