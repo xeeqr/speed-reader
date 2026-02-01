@@ -79,7 +79,7 @@ Output will be in the `dist` folder.
 
 ## Inspiration and similar projects
 
-- [Original RSVP Speed Reader](https://snowfluke.github.io/rsvp-speed-reader/)
+- [RSVP Speed Reader](https://snowfluke.github.io/rsvp-speed-reader/) - Inspiration to theme
 - [Spritz](https://spritz.com/) - The commercial product that popularized ORP-based RSVP
 - [OpenSpritz](https://github.com/Miserlou/OpenSpritz) - Open source Spritz implementation
 - [speedread](https://github.com/pasky/speedread) - Terminal-based Spritz-alike in Perl
