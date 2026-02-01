@@ -233,6 +233,33 @@ function formatReadingTime(minutes) {
   return `${hours}h ${mins}m`;
 }
 
+// Fetch book metadata from Open Library API
+async function fetchMetadataFromOpenLibrary(title, author) {
+  if (!title && !author) return null;
+
+  try {
+    const query = [title, author].filter(Boolean).join(" ");
+    const url = `https://openlibrary.org/search.json?q=${encodeURIComponent(query)}&limit=1&fields=title,author_name,cover_i`;
+    const response = await fetch(url);
+    if (!response.ok) return null;
+
+    const data = await response.json();
+    if (!data.docs || data.docs.length === 0) return null;
+
+    const book = data.docs[0];
+    return {
+      title: book.title || null,
+      author: book.author_name?.[0] || null,
+      cover: book.cover_i
+        ? `https://covers.openlibrary.org/b/id/${book.cover_i}-M.jpg`
+        : null,
+    };
+  } catch (e) {
+    console.error("Failed to fetch from Open Library:", e);
+    return null;
+  }
+}
+
 function App() {
   // Load settings only once on mount
   const [savedSettings] = useState(() => loadSettings());
@@ -271,6 +298,9 @@ function App() {
   const [wordAmount, setWordAmount] = useState(
     () => savedSettings?.wordAmount ?? 1,
   );
+  const [fetchMetadataOnline, setFetchMetadataOnline] = useState(
+    () => savedSettings?.fetchMetadataOnline ?? false,
+  );
   const timeoutRef = useRef(null);
   const prevTextRef = useRef(text);
   const fileInputRef = useRef(null);
@@ -284,7 +314,23 @@ function App() {
       if (file.name.endsWith(".epub")) {
         const result = await parseEpub(file);
         setText(result.text);
-        setBookMetadata(result.metadata);
+
+        let metadata = result.metadata;
+        // Fetch missing metadata from Open Library if enabled
+        if (fetchMetadataOnline && (!metadata.title || !metadata.cover)) {
+          const onlineMetadata = await fetchMetadataFromOpenLibrary(
+            metadata.title,
+            metadata.author,
+          );
+          if (onlineMetadata) {
+            metadata = {
+              title: metadata.title || onlineMetadata.title,
+              author: metadata.author || onlineMetadata.author,
+              cover: metadata.cover || onlineMetadata.cover,
+            };
+          }
+        }
+        setBookMetadata(metadata);
       } else if (file.name.endsWith(".txt")) {
         const textContent = await file.text();
         setText(textContent);
@@ -335,8 +381,9 @@ function App() {
       sideOpacity,
       wordAmount,
       bookMetadata,
+      fetchMetadataOnline,
     });
-  }, [wpm, text, currentIndex, sideOpacity, wordAmount, bookMetadata]);
+  }, [wpm, text, currentIndex, sideOpacity, wordAmount, bookMetadata, fetchMetadataOnline]);
 
   const getBaseDelay = useCallback(() => {
     return (60 / wpm) * 1000;
@@ -890,6 +937,31 @@ function App() {
                   </span>
                 </div>
               </div>
+              <div style={styles.settingRow}>
+                <label style={styles.settingLabel}>
+                  <span>Fetch missing metadata online</span>
+                  <span style={styles.settingHint}>Uses Open Library API</span>
+                </label>
+                <div style={styles.settingControl}>
+                  <button
+                    onClick={() => setFetchMetadataOnline(!fetchMetadataOnline)}
+                    style={{
+                      ...styles.toggleBtn,
+                      backgroundColor: fetchMetadataOnline ? "#ff6b6b" : "#333",
+                    }}
+                    aria-pressed={fetchMetadataOnline}
+                  >
+                    <span
+                      style={{
+                        ...styles.toggleKnob,
+                        transform: fetchMetadataOnline
+                          ? "translateX(16px)"
+                          : "translateX(0)",
+                      }}
+                    />
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -1243,6 +1315,8 @@ const styles = {
   settingLabel: {
     fontSize: "0.875rem",
     color: "rgb(98, 98, 98)",
+    display: "flex",
+    flexDirection: "column",
   },
   settingControl: {
     display: "flex",
@@ -1269,6 +1343,31 @@ const styles = {
   slider: {
     width: "120px",
     accentColor: "#ff6b6b",
+  },
+  settingHint: {
+    display: "block",
+    fontSize: "0.7rem",
+    color: "#555",
+    marginTop: "2px",
+  },
+  toggleBtn: {
+    width: "40px",
+    height: "24px",
+    borderRadius: "12px",
+    border: "none",
+    cursor: "pointer",
+    position: "relative",
+    transition: "background-color 0.2s",
+  },
+  toggleKnob: {
+    position: "absolute",
+    top: "3px",
+    left: "3px",
+    width: "18px",
+    height: "18px",
+    borderRadius: "50%",
+    backgroundColor: "#fff",
+    transition: "transform 0.2s",
   },
   shortcutList: {
     display: "flex",

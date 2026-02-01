@@ -1,6 +1,6 @@
 # ⚡ Speed reader
 
-![Version](https://img.shields.io/badge/version-1.0.2-blue?style=for-the-badge)
+![Version](https://img.shields.io/badge/version-1.0.3-blue?style=for-the-badge)
 ![React](https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=react&logoColor=black)
 ![Vite](https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=vite&logoColor=white)
 ![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
@@ -21,6 +21,8 @@ A web-based speed reading tool using Rapid Serial Visual Presentation (RSVP) wit
 ## Privacy and offline
 
 Everything runs locally in your browser. Your text and files never leave your computer - no servers, no tracking, no analytics. EPUB and TXT files are processed entirely client-side. Settings and reading progress are stored in localStorage. Works offline once loaded.
+
+Optional: If enabled in settings, missing book metadata (title, author, cover) can be fetched from [Open Library API](https://openlibrary.org/developers/api). This sends the book title to their servers.
 
 ## What is RSVP?
 

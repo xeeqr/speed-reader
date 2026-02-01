@@ -1,3 +1,7 @@
+### 2026-02-01: 1.0.3
+
+* Add Open Library API integration for missing book metadata (opt-in)
+
 ### 2026-02-01: 1.0.2
 
 * Convert book metadata to semantic HTML for accessibility
