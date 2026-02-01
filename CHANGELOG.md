@@ -1,3 +1,7 @@
+### 2026-02-01: 1.0.4
+
+* Improve mobile responsiveness and book metadata layout
+
 ### 2026-02-01: 1.0.3
 
 * Add mobile responsiveness

@@ -719,32 +719,32 @@ function App() {
           <kbd style={styles.kbd}>↓</kbd> speed
           <kbd style={styles.kbd}>R</kbd> reset
         </div>
-      </div>
 
-      {/* Book metadata display */}
-      {bookMetadata && (bookMetadata.title || bookMetadata.cover) && (
-        <aside style={styles.bookMetadata} aria-label="Current book" className="book-metadata">
-          {bookMetadata.cover && (
-            <img
-              src={bookMetadata.cover}
-              alt={`Cover of ${bookMetadata.title || "current book"}`}
-              style={styles.bookCover}
-              className="book-cover"
-            />
-          )}
-          <div style={styles.bookInfo}>
-            {bookMetadata.title && (
-              <h3 style={styles.bookTitle} className="book-title">{bookMetadata.title}</h3>
+        {/* Book metadata display */}
+        {bookMetadata && (bookMetadata.title || bookMetadata.cover) && (
+          <aside style={styles.bookMetadata} aria-label="Current book" className="book-metadata">
+            {bookMetadata.cover && (
+              <img
+                src={bookMetadata.cover}
+                alt={`Cover of ${bookMetadata.title || "current book"}`}
+                style={styles.bookCover}
+                className="book-cover"
+              />
             )}
-            {bookMetadata.author && (
-              <p style={styles.bookAuthor} className="book-author">{bookMetadata.author}</p>
-            )}
-            <p style={styles.bookStats} className="book-stats">
-              {formatReadingTime((words.length - currentIndex) / wpm)} left
-            </p>
-          </div>
-        </aside>
-      )}
+            <div style={styles.bookInfo}>
+              {bookMetadata.title && (
+                <h3 style={styles.bookTitle} className="book-title">{bookMetadata.title}</h3>
+              )}
+              {bookMetadata.author && (
+                <p style={styles.bookAuthor} className="book-author">{bookMetadata.author}</p>
+              )}
+              <p style={styles.bookStats} className="book-stats">
+                {formatReadingTime((words.length - currentIndex) / wpm)} left
+              </p>
+            </div>
+          </aside>
+        )}
+      </div>
 
       {/* Keyboard shortcuts modal */}
       {showShortcuts && (
@@ -1432,14 +1432,11 @@ const styles = {
 
   // Book metadata
   bookMetadata: {
-    position: "fixed",
-    bottom: "20px",
-    left: "20px",
     display: "flex",
     alignItems: "flex-end",
     gap: "12px",
     maxWidth: "280px",
-    zIndex: 50,
+    marginTop: "16px",
   },
   bookCover: {
     width: "48px",

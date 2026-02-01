@@ -48,7 +48,25 @@ button:active {
   color: #ccc !important;
 }
 
+/* Desktop: fixed book metadata */
+@media (min-width: 866px) {
+  .book-metadata {
+    position: fixed !important;
+    bottom: 20px !important;
+    left: 20px !important;
+    margin-top: 0 !important;
+    z-index: 50;
+  }
+}
+
 /* Mobile responsiveness */
+@media (max-width: 865px) {
+  /* Controls margin */
+  .bottom-area > div:first-child {
+    margin-bottom: 10px !important;
+  }
+}
+
 @media (max-width: 600px) {
   /* Hide text labels on buttons */
   .icon-btn span,
@@ -58,7 +76,7 @@ button:active {
 
   /* Reduce top bar padding */
   .top-bar {
-    padding: 12px 16px !important;
+    padding: 12px 5px !important;
   }
 
   /* Smaller WPM display */
@@ -99,9 +117,8 @@ button:active {
 
   /* Smaller book metadata */
   .book-metadata {
-    max-width: 200px !important;
-    bottom: 12px !important;
-    left: 12px !important;
+    max-width: 100% !important;
+    justify-content: center;
   }
 
   .book-cover {
@@ -128,6 +145,30 @@ button:active {
   }
 }
 
+@media (max-width: 480px) {
+  /* Book metadata left aligned */
+  .book-metadata {
+    justify-content: flex-start !important;
+    margin-top: 6px !important;
+  }
+
+  /* Reading area vertical centering */
+  .main-area {
+    position: relative;
+    top: 20px;
+  }
+
+  /* WPM selection centered, compact */
+  .wpm-control {
+    gap: 0 !important;
+  }
+
+  .wpm-btn {
+    padding-left: 5px !important;
+    padding-right: 5px !important;
+  }
+}
+
 @media (max-width: 400px) {
   /* Even smaller word display for very small screens */
   .word-display {
@@ -136,10 +177,5 @@ button:active {
 
   .word-container {
     height: 80px !important;
-  }
-
-  /* Hide book metadata on very small screens */
-  .book-metadata {
-    display: none !important;
   }
 }
