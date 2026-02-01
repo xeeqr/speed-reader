@@ -657,26 +657,26 @@ function App() {
 
       {/* Book metadata display */}
       {bookMetadata && (bookMetadata.title || bookMetadata.cover) && (
-        <div style={styles.bookMetadata}>
+        <aside style={styles.bookMetadata} aria-label="Current book">
           {bookMetadata.cover && (
             <img
               src={bookMetadata.cover}
-              alt="Book cover"
+              alt={`Cover of ${bookMetadata.title || "current book"}`}
               style={styles.bookCover}
             />
           )}
           <div style={styles.bookInfo}>
             {bookMetadata.title && (
-              <div style={styles.bookTitle}>{bookMetadata.title}</div>
+              <h3 style={styles.bookTitle}>{bookMetadata.title}</h3>
             )}
             {bookMetadata.author && (
-              <div style={styles.bookAuthor}>{bookMetadata.author}</div>
+              <p style={styles.bookAuthor}>{bookMetadata.author}</p>
             )}
-            <div style={styles.bookStats}>
+            <p style={styles.bookStats}>
               {formatReadingTime((words.length - currentIndex) / wpm)} left
-            </div>
+            </p>
           </div>
-        </div>
+        </aside>
       )}
 
       {/* Keyboard shortcuts modal */}
@@ -1322,6 +1322,7 @@ const styles = {
     whiteSpace: "nowrap",
     overflow: "hidden",
     textOverflow: "ellipsis",
+    margin: 0,
     marginBottom: "2px",
   },
   bookAuthor: {
@@ -1330,10 +1331,12 @@ const styles = {
     whiteSpace: "nowrap",
     overflow: "hidden",
     textOverflow: "ellipsis",
+    margin: 0,
   },
   bookStats: {
     fontSize: "0.7rem",
     color: "#555",
+    margin: 0,
     marginTop: "2px",
   },
 };

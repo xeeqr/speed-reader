@@ -1,5 +1,6 @@
 ### 2026-02-01: 1.0.2
 
+* Convert book metadata to semantic HTML for accessibility
 * Add reading time to book metadata display
 * Improve book info readability
 
