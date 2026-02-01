@@ -233,9 +233,6 @@ function formatReadingTime(minutes) {
   return `${hours}h ${mins}m`;
 }
 
-// Words per page (standard estimate)
-const WORDS_PER_PAGE = 250;
-
 function App() {
   // Load settings only once on mount
   const [savedSettings] = useState(() => loadSettings());
@@ -676,13 +673,7 @@ function App() {
               <div style={styles.bookAuthor}>{bookMetadata.author}</div>
             )}
             <div style={styles.bookStats}>
-              {(() => {
-                const currentPage = Math.floor(currentIndex / WORDS_PER_PAGE) + 1;
-                const totalPages = Math.max(1, Math.ceil(words.length / WORDS_PER_PAGE));
-                const remainingWords = words.length - currentIndex;
-                const remainingMinutes = remainingWords / wpm;
-                return `Page ${currentPage}/${totalPages} · ${formatReadingTime(remainingMinutes)} left`;
-              })()}
+              {formatReadingTime((words.length - currentIndex) / wpm)} left
             </div>
           </div>
         </div>
@@ -1325,23 +1316,24 @@ const styles = {
     minWidth: 0,
   },
   bookTitle: {
-    fontSize: "0.75rem",
+    fontSize: "0.8rem",
     fontWeight: "500",
-    color: "#888",
+    color: "#999",
     whiteSpace: "nowrap",
     overflow: "hidden",
     textOverflow: "ellipsis",
+    marginBottom: "2px",
   },
   bookAuthor: {
-    fontSize: "0.7rem",
-    color: "#555",
+    fontSize: "0.75rem",
+    color: "#666",
     whiteSpace: "nowrap",
     overflow: "hidden",
     textOverflow: "ellipsis",
   },
   bookStats: {
-    fontSize: "0.65rem",
-    color: "#444",
+    fontSize: "0.7rem",
+    color: "#555",
     marginTop: "2px",
   },
 };
