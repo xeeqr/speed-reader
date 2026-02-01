@@ -1,3 +1,7 @@
+### 2026-02-01: 1.0.2
+
+* Add reading time and page info to book metadata display
+
 ### 2026-02-01: 1.0.1
 
 * Persist book metadata to localStorage

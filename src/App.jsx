@@ -223,6 +223,19 @@ function getWordDelay(word, baseDelay) {
   return baseDelay * multiplier;
 }
 
+// Format reading time in human-readable format
+function formatReadingTime(minutes) {
+  if (minutes < 1) return "< 1 min";
+  if (minutes < 60) return `${Math.round(minutes)} min`;
+  const hours = Math.floor(minutes / 60);
+  const mins = Math.round(minutes % 60);
+  if (mins === 0) return `${hours}h`;
+  return `${hours}h ${mins}m`;
+}
+
+// Words per page (standard estimate)
+const WORDS_PER_PAGE = 250;
+
 function App() {
   // Load settings only once on mount
   const [savedSettings] = useState(() => loadSettings());
@@ -662,6 +675,15 @@ function App() {
             {bookMetadata.author && (
               <div style={styles.bookAuthor}>{bookMetadata.author}</div>
             )}
+            <div style={styles.bookStats}>
+              {(() => {
+                const currentPage = Math.floor(currentIndex / WORDS_PER_PAGE) + 1;
+                const totalPages = Math.max(1, Math.ceil(words.length / WORDS_PER_PAGE));
+                const remainingWords = words.length - currentIndex;
+                const remainingMinutes = remainingWords / wpm;
+                return `Page ${currentPage}/${totalPages} · ${formatReadingTime(remainingMinutes)} left`;
+              })()}
+            </div>
           </div>
         </div>
       )}
@@ -1316,6 +1338,11 @@ const styles = {
     whiteSpace: "nowrap",
     overflow: "hidden",
     textOverflow: "ellipsis",
+  },
+  bookStats: {
+    fontSize: "0.65rem",
+    color: "#444",
+    marginTop: "2px",
   },
 };
 
