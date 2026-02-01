@@ -685,7 +685,26 @@ function App() {
         </div>
 
         {/* Progress */}
-        <div style={styles.progressContainer} onClick={handleProgressClick}>
+        <div
+          style={styles.progressContainer}
+          onClick={handleProgressClick}
+          onKeyDown={(e) => {
+            if (e.key === "ArrowLeft") {
+              e.preventDefault();
+              setCurrentIndex((prev) => Math.max(0, prev - Math.ceil(words.length / 100)));
+            } else if (e.key === "ArrowRight") {
+              e.preventDefault();
+              setCurrentIndex((prev) => Math.min(words.length - 1, prev + Math.ceil(words.length / 100)));
+            }
+          }}
+          role="slider"
+          tabIndex={0}
+          aria-label="Reading progress"
+          aria-valuemin={0}
+          aria-valuemax={100}
+          aria-valuenow={Math.round(progress)}
+          aria-valuetext={`${Math.round(progress)}% complete, word ${currentIndex + 1} of ${words.length}`}
+        >
           <div style={{ ...styles.progressBar, width: `${progress}%` }} />
         </div>
         <div style={styles.progressText}>
