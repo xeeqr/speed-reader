@@ -1,6 +1,7 @@
 ### 2026-02-01: 1.0.4
 
 * Improve mobile responsiveness and book metadata layout
+* Fix words per display setting and limit max to 3
 
 ### 2026-02-01: 1.0.3
 

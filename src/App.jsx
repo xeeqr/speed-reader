@@ -396,11 +396,11 @@ function App() {
 
       timeoutRef.current = setTimeout(() => {
         setCurrentIndex((prev) => {
-          if (prev + 1 >= words.length) {
+          if (prev + wordAmount >= words.length) {
             setIsPlaying(false);
             return prev;
           }
-          return prev + 1;
+          return prev + wordAmount;
         });
       }, delay);
     }
@@ -410,7 +410,7 @@ function App() {
         clearTimeout(timeoutRef.current);
       }
     };
-  }, [isPlaying, currentIndex, words, getBaseDelay]);
+  }, [isPlaying, currentIndex, words, getBaseDelay, wordAmount]);
 
   useEffect(() => {
     const handleKeyDown = (e) => {
@@ -465,9 +465,10 @@ function App() {
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [isPlaying, words.length]);
 
-  const getCurrentWord = () => {
+  const getCurrentWords = () => {
     if (words.length === 0) return "";
-    return words[currentIndex] || "";
+    const endIndex = Math.min(currentIndex + wordAmount, words.length);
+    return words.slice(currentIndex, endIndex).join(" ");
   };
 
   const togglePlay = () => {
@@ -502,12 +503,14 @@ function App() {
 
   const progress =
     words.length > 0 ? ((currentIndex + 1) / words.length) * 100 : 0;
-  const currentWord = getCurrentWord();
-  const orpIndex = getORPIndex(currentWord.length);
+  const currentText = getCurrentWords();
+  // For ORP, use the first word when displaying multiple words
+  const firstWord = words[currentIndex] || "";
+  const orpIndex = getORPIndex(firstWord.length);
 
-  const beforeORP = currentWord.slice(0, orpIndex);
-  const orpChar = currentWord[orpIndex] || "";
-  const afterORP = currentWord.slice(orpIndex + 1);
+  const beforeORP = currentText.slice(0, orpIndex);
+  const orpChar = currentText[orpIndex] || "";
+  const afterORP = currentText.slice(orpIndex + 1);
 
   return (
     <div style={styles.container}>
@@ -622,7 +625,7 @@ function App() {
           </div>
 
           <div style={styles.wordContainer} className="word-container">
-            {currentWord ? (
+            {currentText ? (
               <div
                 style={{
                   ...styles.wordDisplay,
@@ -952,9 +955,9 @@ function App() {
                   </button>
                   <span style={styles.settingValue}>{wordAmount}</span>
                   <button
-                    onClick={() => setWordAmount(Math.min(5, wordAmount + 1))}
+                    onClick={() => setWordAmount(Math.min(3, wordAmount + 1))}
                     style={styles.settingBtn}
-                    disabled={wordAmount >= 5}
+                    disabled={wordAmount >= 3}
                   >
                     <Plus size={14} />
                   </button>
