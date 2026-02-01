@@ -15,6 +15,10 @@ A web-based speed reading tool using Rapid Serial Visual Presentation (RSVP) wit
 - Dark theme optimized for reading
 - Settings persisted to localStorage
 
+## Privacy and offline
+
+Everything runs locally in your browser. Your text and files never leave your computer — no servers, no tracking, no analytics. EPUB and TXT files are processed entirely client-side. Settings and reading progress are stored in localStorage. Works offline once loaded.
+
 ## Screenshot
 
 <img width="1478" height="1084" alt="localhost_5173_" src="https://github.com/user-attachments/assets/6f7f2599-27ae-4065-b1fe-5d767a65a2fb" />
