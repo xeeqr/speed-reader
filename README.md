@@ -2,6 +2,8 @@
 
 A web-based speed reading tool using Rapid Serial Visual Presentation (RSVP) with Optimal Recognition Point (ORP) alignment.
 
+<img width="1478" height="1084" alt="localhost_5173_" src="https://github.com/user-attachments/assets/6f7f2599-27ae-4065-b1fe-5d767a65a2fb" />
+
 ## What is RSVP?
 
 RSVP (Rapid Serial Visual Presentation) is a reading technique that displays text one word at a time at a fixed focal point. This eliminates saccades (eye movements) that normally slow down reading, allowing for significantly faster reading speeds.
