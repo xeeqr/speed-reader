@@ -16,7 +16,7 @@ A web-based speed reading tool using Rapid Serial Visual Presentation (RSVP) wit
 - Dark theme optimized for reading
 - Settings persisted to localStorage
 
-<img width="1478" height="1084" alt="localhost_5173_" src="https://github.com/user-attachments/assets/6f7f2599-27ae-4065-b1fe-5d767a65a2fb" />
+<img width="1201" height="990" alt="localhost_5179_" src="https://github.com/user-attachments/assets/36ceee75-44fe-4852-a05a-e9dfa1a7a9c8" />
 
 ## Privacy and offline
 
