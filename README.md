@@ -1,4 +1,4 @@
-# Speed Reader
+# ⚡ Speed Reader
 
 ![Version](https://img.shields.io/badge/version-1.0.0-blue?style=for-the-badge)
 ![React](https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=react&logoColor=black)
