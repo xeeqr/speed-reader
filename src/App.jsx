@@ -10,6 +10,8 @@ import {
   FileText,
   Upload,
   Settings,
+  Link,
+  Check,
 } from "lucide-react";
 import JSZip from "jszip";
 
@@ -274,6 +276,22 @@ function App() {
       .filter((w) => w.length > 0);
   });
   const [currentIndex, setCurrentIndex] = useState(() => {
+    // Check URL hash for shared position
+    const hash = window.location.hash;
+    if (hash) {
+      const params = new URLSearchParams(hash.slice(1));
+      const urlPos = parseInt(params.get("pos"), 10);
+      if (!isNaN(urlPos) && urlPos >= 0) {
+        // Clear hash after reading
+        window.history.replaceState(null, "", window.location.pathname);
+        const t = savedSettings?.text || DEFAULT_TEXT;
+        const wordCount = t
+          .trim()
+          .split(/\s+/)
+          .filter((w) => w.length > 0).length;
+        return Math.min(Math.max(0, urlPos), Math.max(0, wordCount - 1));
+      }
+    }
     const t = savedSettings?.text || DEFAULT_TEXT;
     const pos = getPositionForText(t, savedSettings?.positions || {});
     const wordCount = t
@@ -301,6 +319,7 @@ function App() {
   const [fetchMetadataOnline, setFetchMetadataOnline] = useState(
     () => savedSettings?.fetchMetadataOnline ?? false,
   );
+  const [linkCopied, setLinkCopied] = useState(false);
   const timeoutRef = useRef(null);
   const prevTextRef = useRef(text);
   const fileInputRef = useRef(null);
@@ -485,6 +504,17 @@ function App() {
 
   const adjustWpm = (delta) => {
     setWpm((prev) => Math.max(50, Math.min(1500, prev + delta)));
+  };
+
+  const copyPositionUrl = async () => {
+    const url = `${window.location.origin}${window.location.pathname}#pos=${currentIndex}`;
+    try {
+      await navigator.clipboard.writeText(url);
+      setLinkCopied(true);
+      setTimeout(() => setLinkCopied(false), 2000);
+    } catch (e) {
+      console.error("Failed to copy URL:", e);
+    }
   };
 
   const handleProgressClick = (e) => {
@@ -710,8 +740,19 @@ function App() {
         >
           <div style={{ ...styles.progressBar, width: `${progress}%` }} />
         </div>
-        <div style={styles.progressText}>
-          {currentIndex + 1} / {words.length} ({Math.round(progress)}%)
+        <div style={styles.progressRow}>
+          <div style={styles.progressText}>
+            {currentIndex + 1} / {words.length} ({Math.round(progress)}%)
+          </div>
+          <button
+            onClick={copyPositionUrl}
+            style={styles.linkBtn}
+            className="icon-btn"
+            title="Copy link to current position"
+          >
+            {linkCopied ? <Check size={14} /> : <Link size={14} />}
+            <span style={styles.linkBtnText}>{linkCopied ? "Copied" : "Copy link"}</span>
+          </button>
         </div>
 
         <div style={styles.hint} className="hint">
@@ -1260,9 +1301,29 @@ const styles = {
     backgroundColor: "#ff6b6b",
     transition: "width 0.05s linear",
   },
+  progressRow: {
+    display: "flex",
+    alignItems: "center",
+    gap: "12px",
+  },
   progressText: {
     fontSize: "0.7rem",
     color: "rgb(98, 98, 98)",
+  },
+  linkBtn: {
+    background: "transparent",
+    border: "none",
+    borderRadius: "4px",
+    padding: "4px 8px",
+    cursor: "pointer",
+    color: "rgb(98, 98, 98)",
+    display: "flex",
+    alignItems: "center",
+    gap: "4px",
+    fontSize: "0.7rem",
+  },
+  linkBtnText: {
+    fontSize: "0.65rem",
   },
   hint: {
     fontSize: "0.7rem",

@@ -2,6 +2,7 @@
 
 * Improve mobile responsiveness and book metadata layout
 * Fix words per display setting and limit max to 3
+* Add copy link button to share reading position across devices
 
 ### 2026-02-01: 1.0.3
 
