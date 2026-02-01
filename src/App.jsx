@@ -512,7 +512,7 @@ function App() {
   return (
     <div style={styles.container}>
       {/* Top controls */}
-      <div style={styles.topBar}>
+      <div style={styles.topBar} className="top-bar">
         <div style={styles.topLeft}>
           <button
             onClick={() => setShowTextInput(!showTextInput)}
@@ -524,7 +524,7 @@ function App() {
             title="Edit text"
           >
             <FileText size={16} />
-            <span>Text</span>
+            <span className="text-btn-label">Text</span>
           </button>
           <button
             onClick={() => fileInputRef.current?.click()}
@@ -534,7 +534,7 @@ function App() {
             disabled={isLoadingFile}
           >
             <Upload size={16} />
-            <span>{isLoadingFile ? "Loading..." : "Upload"}</span>
+            <span className="text-btn-label">{isLoadingFile ? "Loading..." : "Upload"}</span>
           </button>
           <input
             ref={fileInputRef}
@@ -613,7 +613,7 @@ function App() {
       )}
 
       {/* Main display area */}
-      <div style={styles.mainArea}>
+      <div style={styles.mainArea} className="main-area">
         <div style={styles.displayArea}>
           <div style={styles.focalGuide}>
             <div style={styles.focalLine} />
@@ -621,14 +621,14 @@ function App() {
             <div style={styles.focalLine} />
           </div>
 
-          <div style={styles.wordContainer}>
+          <div style={styles.wordContainer} className="word-container">
             {currentWord ? (
               <div
                 style={{
                   ...styles.wordDisplay,
                   transform: `translateY(-50%) translateX(calc(-${orpIndex}ch - 0.5ch))`,
                 }}
-                className="mono"
+                className="mono word-display"
               >
                 <span style={{ ...styles.beforeORP, opacity: sideOpacity }}>
                   {beforeORP}
@@ -644,7 +644,7 @@ function App() {
                   ...styles.wordDisplay,
                   transform: "translateY(-50%) translateX(-50%)",
                 }}
-                className="mono"
+                className="mono word-display"
               >
                 <span style={styles.placeholder}>Ready</span>
               </div>
@@ -660,7 +660,7 @@ function App() {
       </div>
 
       {/* Bottom controls */}
-      <div style={styles.bottomArea}>
+      <div style={styles.bottomArea} className="bottom-area">
         {/* Controls with play button in center */}
         <div style={styles.controlsRow}>
           <button
@@ -671,7 +671,7 @@ function App() {
             <ChevronLeft size={24} />
             <ChevronLeft size={24} style={{ marginLeft: -14 }} />
           </button>
-          <button onClick={togglePlay} style={styles.playBtn}>
+          <button onClick={togglePlay} style={styles.playBtn} className="play-btn">
             {isPlaying ? <PauseSolid size={32} /> : <PlaySolid size={32} />}
           </button>
           <button
@@ -711,7 +711,7 @@ function App() {
           {currentIndex + 1} / {words.length} ({Math.round(progress)}%)
         </div>
 
-        <div style={styles.hint}>
+        <div style={styles.hint} className="hint">
           <kbd style={styles.kbd}>Space</kbd> play
           <kbd style={styles.kbd}>←</kbd>
           <kbd style={styles.kbd}>→</kbd> word
@@ -723,22 +723,23 @@ function App() {
 
       {/* Book metadata display */}
       {bookMetadata && (bookMetadata.title || bookMetadata.cover) && (
-        <aside style={styles.bookMetadata} aria-label="Current book">
+        <aside style={styles.bookMetadata} aria-label="Current book" className="book-metadata">
           {bookMetadata.cover && (
             <img
               src={bookMetadata.cover}
               alt={`Cover of ${bookMetadata.title || "current book"}`}
               style={styles.bookCover}
+              className="book-cover"
             />
           )}
           <div style={styles.bookInfo}>
             {bookMetadata.title && (
-              <h3 style={styles.bookTitle}>{bookMetadata.title}</h3>
+              <h3 style={styles.bookTitle} className="book-title">{bookMetadata.title}</h3>
             )}
             {bookMetadata.author && (
-              <p style={styles.bookAuthor}>{bookMetadata.author}</p>
+              <p style={styles.bookAuthor} className="book-author">{bookMetadata.author}</p>
             )}
-            <p style={styles.bookStats}>
+            <p style={styles.bookStats} className="book-stats">
               {formatReadingTime((words.length - currentIndex) / wpm)} left
             </p>
           </div>
@@ -753,7 +754,7 @@ function App() {
           role="presentation"
         >
           <div
-            style={styles.modal}
+            style={styles.modal} className="modal"
             onClick={(e) => e.stopPropagation()}
             role="dialog"
             aria-modal="true"
@@ -816,7 +817,7 @@ function App() {
       {showInfo && (
         <div style={styles.modalOverlay} onClick={() => setShowInfo(false)} role="presentation">
           <div
-            style={styles.modal}
+            style={styles.modal} className="modal"
             onClick={(e) => e.stopPropagation()}
             role="dialog"
             aria-modal="true"
@@ -923,7 +924,7 @@ function App() {
       {showSettings && (
         <div style={styles.modalOverlay} onClick={() => setShowSettings(false)} role="presentation">
           <div
-            style={styles.modal}
+            style={styles.modal} className="modal"
             onClick={(e) => e.stopPropagation()}
             role="dialog"
             aria-modal="true"

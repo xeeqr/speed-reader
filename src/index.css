@@ -47,3 +47,99 @@ button:active {
 .wpm-btn:hover {
   color: #ccc !important;
 }
+
+/* Mobile responsiveness */
+@media (max-width: 600px) {
+  /* Hide text labels on buttons */
+  .icon-btn span,
+  .text-btn-label {
+    display: none !important;
+  }
+
+  /* Reduce top bar padding */
+  .top-bar {
+    padding: 12px 16px !important;
+  }
+
+  /* Smaller WPM display */
+  .wpm-value {
+    font-size: 1.2rem !important;
+  }
+
+  /* Smaller word display */
+  .word-display {
+    font-size: 2.5rem !important;
+  }
+
+  /* Reduce main area padding */
+  .main-area {
+    padding: 0 16px !important;
+  }
+
+  /* Smaller word container */
+  .word-container {
+    height: 100px !important;
+  }
+
+  /* Reduce bottom area padding */
+  .bottom-area {
+    padding: 12px 16px 24px !important;
+  }
+
+  /* Smaller play button */
+  .play-btn {
+    width: 56px !important;
+    height: 56px !important;
+  }
+
+  /* Hide keyboard hints on mobile */
+  .hint {
+    display: none !important;
+  }
+
+  /* Smaller book metadata */
+  .book-metadata {
+    max-width: 200px !important;
+    bottom: 12px !important;
+    left: 12px !important;
+  }
+
+  .book-cover {
+    width: 36px !important;
+  }
+
+  .book-title {
+    font-size: 0.7rem !important;
+  }
+
+  .book-author,
+  .book-stats {
+    font-size: 0.65rem !important;
+  }
+
+  /* Modal adjustments */
+  .modal {
+    max-width: 95% !important;
+    max-height: 90vh !important;
+  }
+
+  .modal-content {
+    padding: 16px !important;
+  }
+}
+
+@media (max-width: 400px) {
+  /* Even smaller word display for very small screens */
+  .word-display {
+    font-size: 2rem !important;
+  }
+
+  .word-container {
+    height: 80px !important;
+  }
+
+  /* Hide book metadata on very small screens */
+  .book-metadata {
+    display: none !important;
+  }
+}
