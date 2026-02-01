@@ -1,8 +1,21 @@
-# ⚡ Speed reader
+# Speed Reader
 
 ![Version](https://img.shields.io/badge/version-1.0.0-blue?style=for-the-badge)
+![React](https://img.shields.io/badge/React-19-61DAFB?style=for-the-badge&logo=react&logoColor=white)
+![Vite](https://img.shields.io/badge/Vite-6-646CFF?style=for-the-badge&logo=vite&logoColor=white)
+![JavaScript](https://img.shields.io/badge/JavaScript-ES6+-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
 
 A web-based speed reading tool using Rapid Serial Visual Presentation (RSVP) with Optimal Recognition Point (ORP) alignment.
+
+## Features
+
+- EPUB and TXT file support
+- Adjustable reading speed (50-1500 WPM)
+- Progress tracking with position memory per text
+- Dark theme optimized for reading
+- Settings persisted to localStorage
+
+## Screenshot
 
 <img width="1478" height="1084" alt="localhost_5173_" src="https://github.com/user-attachments/assets/6f7f2599-27ae-4065-b1fe-5d767a65a2fb" />
 
@@ -46,18 +59,6 @@ Studies have shown that RSVP reading can achieve speeds of 500+ words per minute
 - Building reading speed gradually
 
 Note: Extended RSVP reading can cause visual fatigue. Take breaks.
-
-## Features
-
-- Adjustable reading speed (50-1500 WPM)
-- ORP highlighting with fixed focal point (Spritz algorithm)
-- Variable word timing based on length and punctuation
-- EPUB and TXT file support
-- Progress tracking with position memory per text
-- Keyboard shortcuts
-- Adjustable side opacity
-- Dark theme optimized for reading
-- Settings persisted to localStorage
 
 ## Running locally
 
