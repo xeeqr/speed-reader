@@ -1,4 +1,6 @@
-# Speed reader
+# ⚡ Speed reader
+
+![Version](https://img.shields.io/badge/version-1.0.0-blue?style=for-the-badge)
 
 A web-based speed reading tool using Rapid Serial Visual Presentation (RSVP) with Optimal Recognition Point (ORP) alignment.
 
