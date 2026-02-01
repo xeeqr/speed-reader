@@ -750,10 +750,17 @@ function App() {
         <div
           style={styles.modalOverlay}
           onClick={() => setShowShortcuts(false)}
+          role="presentation"
         >
-          <div style={styles.modal} onClick={(e) => e.stopPropagation()}>
+          <div
+            style={styles.modal}
+            onClick={(e) => e.stopPropagation()}
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="shortcuts-title"
+          >
             <div style={styles.modalHeader}>
-              <h2 style={styles.modalTitle}>Keyboard shortcuts</h2>
+              <h2 id="shortcuts-title" style={styles.modalTitle}>Keyboard shortcuts</h2>
               <button
                 onClick={() => setShowShortcuts(false)}
                 style={styles.closeBtn}
@@ -807,10 +814,16 @@ function App() {
 
       {/* How it works modal */}
       {showInfo && (
-        <div style={styles.modalOverlay} onClick={() => setShowInfo(false)}>
-          <div style={styles.modal} onClick={(e) => e.stopPropagation()}>
+        <div style={styles.modalOverlay} onClick={() => setShowInfo(false)} role="presentation">
+          <div
+            style={styles.modal}
+            onClick={(e) => e.stopPropagation()}
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="info-title"
+          >
             <div style={styles.modalHeader}>
-              <h2 style={styles.modalTitle}>How RSVP speed reading works</h2>
+              <h2 id="info-title" style={styles.modalTitle}>How RSVP speed reading works</h2>
               <button
                 onClick={() => setShowInfo(false)}
                 style={styles.closeBtn}
@@ -908,10 +921,16 @@ function App() {
 
       {/* Settings modal */}
       {showSettings && (
-        <div style={styles.modalOverlay} onClick={() => setShowSettings(false)}>
-          <div style={styles.modal} onClick={(e) => e.stopPropagation()}>
+        <div style={styles.modalOverlay} onClick={() => setShowSettings(false)} role="presentation">
+          <div
+            style={styles.modal}
+            onClick={(e) => e.stopPropagation()}
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="settings-title"
+          >
             <div style={styles.modalHeader}>
-              <h2 style={styles.modalTitle}>Settings</h2>
+              <h2 id="settings-title" style={styles.modalTitle}>Settings</h2>
               <button
                 onClick={() => setShowSettings(false)}
                 style={styles.closeBtn}

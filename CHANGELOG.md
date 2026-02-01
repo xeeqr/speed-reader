@@ -1,5 +1,6 @@
 ### 2026-02-01: 1.0.3
 
+* Fix modal accessibility
 * Fix progress bar accessibility
 * Add Open Library API integration for missing book metadata (opt-in)
 
