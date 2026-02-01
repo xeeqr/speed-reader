@@ -71,7 +71,7 @@ function savePositionForText(text, position, positions) {
   return { ...positions, [hash]: position };
 }
 
-// Parse EPUB file and extract text
+// Parse EPUB file and extract text and metadata
 async function parseEpub(file) {
   const zip = await JSZip.loadAsync(file);
 
@@ -89,6 +89,52 @@ async function parseEpub(file) {
   // Read the OPF file
   const opfContent = await zip.file(opfPath)?.async("text");
   if (!opfContent) throw new Error("Invalid EPUB: cannot read OPF");
+
+  // Extract metadata
+  const titleMatch = opfContent.match(/<dc:title[^>]*>([^<]+)<\/dc:title>/i);
+  const authorMatch = opfContent.match(/<dc:creator[^>]*>([^<]+)<\/dc:creator>/i);
+
+  const metadata = {
+    title: titleMatch ? titleMatch[1].trim() : null,
+    author: authorMatch ? authorMatch[1].trim() : null,
+    cover: null,
+  };
+
+  // Find cover image - try multiple methods
+  // Method 1: Look for meta cover element
+  const metaCoverMatch = opfContent.match(/<meta[^>]*name="cover"[^>]*content="([^"]+)"/i);
+  // Method 2: Look for item with properties="cover-image"
+  const coverImageMatch = opfContent.match(/<item[^>]*properties="cover-image"[^>]*href="([^"]+)"/i);
+  // Method 3: Look for item with id containing "cover" and image media-type
+  const coverIdMatch = opfContent.match(/<item[^>]*id="[^"]*cover[^"]*"[^>]*href="([^"]+)"[^>]*media-type="image\/[^"]+"/i);
+  // Method 4: Alternate format for cover-image property
+  const coverImageMatch2 = opfContent.match(/<item[^>]*href="([^"]+)"[^>]*properties="cover-image"/i);
+
+  let coverHref = null;
+  if (coverImageMatch) {
+    coverHref = coverImageMatch[1];
+  } else if (coverImageMatch2) {
+    coverHref = coverImageMatch2[1];
+  } else if (metaCoverMatch) {
+    // Need to find the href for this id
+    const coverId = metaCoverMatch[1];
+    const itemMatch = opfContent.match(new RegExp(`<item[^>]*id="${coverId}"[^>]*href="([^"]+)"`, "i"));
+    if (itemMatch) coverHref = itemMatch[1];
+  } else if (coverIdMatch) {
+    coverHref = coverIdMatch[1];
+  }
+
+  // Load cover image if found (as base64 data URL for persistence)
+  if (coverHref) {
+    const coverPath = coverHref.startsWith("/") ? coverHref.slice(1) : opfDir + coverHref;
+    const coverFile = zip.file(coverPath);
+    if (coverFile) {
+      const coverBase64 = await coverFile.async("base64");
+      const mimeMatch = coverHref.match(/\.(jpe?g|png|gif|webp)$/i);
+      const mimeType = mimeMatch ? `image/${mimeMatch[1].toLowerCase().replace("jpg", "jpeg")}` : "image/jpeg";
+      metadata.cover = `data:${mimeType};base64,${coverBase64}`;
+    }
+  }
 
   // Get spine items (reading order)
   const spineMatches = [
@@ -152,7 +198,7 @@ async function parseEpub(file) {
     }
   }
 
-  return fullText.trim();
+  return { text: fullText.trim(), metadata };
 }
 
 // Spritz ORP algorithm - position where the eye naturally fixates
@@ -206,6 +252,9 @@ function App() {
   const [showTextInput, setShowTextInput] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
   const [isLoadingFile, setIsLoadingFile] = useState(false);
+  const [bookMetadata, setBookMetadata] = useState(
+    () => savedSettings?.bookMetadata || null,
+  );
   const [sideOpacity, setSideOpacity] = useState(
     () => savedSettings?.sideOpacity ?? 0.5,
   );
@@ -223,11 +272,13 @@ function App() {
     setIsLoadingFile(true);
     try {
       if (file.name.endsWith(".epub")) {
-        const extractedText = await parseEpub(file);
-        setText(extractedText);
+        const result = await parseEpub(file);
+        setText(result.text);
+        setBookMetadata(result.metadata);
       } else if (file.name.endsWith(".txt")) {
         const textContent = await file.text();
         setText(textContent);
+        setBookMetadata(null);
       } else {
         alert("Please upload an EPUB or TXT file");
       }
@@ -273,8 +324,9 @@ function App() {
       positions: positionsRef.current,
       sideOpacity,
       wordAmount,
+      bookMetadata,
     });
-  }, [wpm, text, currentIndex, sideOpacity, wordAmount]);
+  }, [wpm, text, currentIndex, sideOpacity, wordAmount, bookMetadata]);
 
   const getBaseDelay = useCallback(() => {
     return (60 / wpm) * 1000;
@@ -592,6 +644,27 @@ function App() {
           <kbd style={styles.kbd}>R</kbd> reset
         </div>
       </div>
+
+      {/* Book metadata display */}
+      {bookMetadata && (bookMetadata.title || bookMetadata.cover) && (
+        <div style={styles.bookMetadata}>
+          {bookMetadata.cover && (
+            <img
+              src={bookMetadata.cover}
+              alt="Book cover"
+              style={styles.bookCover}
+            />
+          )}
+          <div style={styles.bookInfo}>
+            {bookMetadata.title && (
+              <div style={styles.bookTitle}>{bookMetadata.title}</div>
+            )}
+            {bookMetadata.author && (
+              <div style={styles.bookAuthor}>{bookMetadata.author}</div>
+            )}
+          </div>
+        </div>
+      )}
 
       {/* Keyboard shortcuts modal */}
       {showShortcuts && (
@@ -1204,6 +1277,45 @@ const styles = {
     minWidth: "50px",
     textAlign: "center",
     color: "#888",
+  },
+
+  // Book metadata
+  bookMetadata: {
+    position: "fixed",
+    bottom: "20px",
+    left: "20px",
+    display: "flex",
+    alignItems: "flex-end",
+    gap: "12px",
+    maxWidth: "280px",
+    zIndex: 50,
+  },
+  bookCover: {
+    width: "48px",
+    height: "auto",
+    borderRadius: "4px",
+    boxShadow: "0 2px 8px rgba(0, 0, 0, 0.4)",
+  },
+  bookInfo: {
+    display: "flex",
+    flexDirection: "column",
+    gap: "2px",
+    minWidth: 0,
+  },
+  bookTitle: {
+    fontSize: "0.75rem",
+    fontWeight: "500",
+    color: "#888",
+    whiteSpace: "nowrap",
+    overflow: "hidden",
+    textOverflow: "ellipsis",
+  },
+  bookAuthor: {
+    fontSize: "0.7rem",
+    color: "#555",
+    whiteSpace: "nowrap",
+    overflow: "hidden",
+    textOverflow: "ellipsis",
   },
 };
 
