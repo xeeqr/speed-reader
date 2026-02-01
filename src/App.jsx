@@ -722,13 +722,6 @@ function App() {
                 <li>14+ characters: 5th letter</li>
               </ul>
 
-              <h3 style={styles.sectionTitle}>Variable timing</h3>
-              <p style={styles.paragraph}>
-                Display time adjusts based on word length and punctuation.
-                Longer words and sentence endings get more time, mimicking
-                natural reading rhythm.
-              </p>
-
               <h3 style={styles.sectionTitle}>Research findings</h3>
               <p style={styles.paragraph}>
                 Studies show RSVP can achieve 500+ WPM, though comprehension may
@@ -742,6 +735,20 @@ function App() {
                 <li>Focus on the red letter, let words come to you</li>
                 <li>Take breaks to avoid eye fatigue</li>
               </ul>
+
+              <h3 style={styles.sectionTitle}>Source code</h3>
+              <p style={styles.paragraph}>
+                This project is open source and available on{" "}
+                <a
+                  href="https://github.com/ronilaukkarinen/speed-reader"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={styles.link}
+                >
+                  GitHub
+                </a>
+                .
+              </p>
             </div>
           </div>
         </div>
