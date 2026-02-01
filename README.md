@@ -17,7 +17,7 @@ A web-based speed reading tool using Rapid Serial Visual Presentation (RSVP) wit
 
 ## Privacy and offline
 
-Everything runs locally in your browser. Your text and files never leave your computer — no servers, no tracking, no analytics. EPUB and TXT files are processed entirely client-side. Settings and reading progress are stored in localStorage. Works offline once loaded.
+Everything runs locally in your browser. Your text and files never leave your computer - no servers, no tracking, no analytics. EPUB and TXT files are processed entirely client-side. Settings and reading progress are stored in localStorage. Works offline once loaded.
 
 ## Screenshot
 
